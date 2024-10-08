@@ -1,0 +1,6 @@
+@Week12Practice3_Survivor_HostAddress = http://localhost:5128
+
+GET {{Week12Practice3_Survivor_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
