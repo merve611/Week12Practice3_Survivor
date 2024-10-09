@@ -108,7 +108,7 @@ namespace Week12Practice3_Survivor.Controllers
             if(competitor is null)
                 return NotFound($"{id} id li yarışmacı silinemedi");
 
-            competitor.IsDeleted = true;
+            competitor.IsDeleted = false;
 
             try
             {

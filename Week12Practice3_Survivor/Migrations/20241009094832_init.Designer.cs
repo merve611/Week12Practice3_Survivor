@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Week12Practice3_Survivor.Context;
 
@@ -11,9 +12,11 @@ using Week12Practice3_Survivor.Context;
 namespace Week12Practice3_Survivor.Migrations
 {
     [DbContext(typeof(SurvivorDbContext))]
-    partial class SurvivorDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241009094832_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

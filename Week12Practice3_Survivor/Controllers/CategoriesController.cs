@@ -36,7 +36,7 @@ namespace Week12Practice3_Survivor.Controllers
 
         public async Task<ActionResult<CategoryEntitiy>> GetById(int id)
         {
-            var category = _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (category is null)
                 return NotFound();
@@ -59,7 +59,7 @@ namespace Week12Practice3_Survivor.Controllers
 
         //PUT /api/categories/{id} - Belirli bir kategoriyi güncelle.
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, CategoryEntitiy updateCategory)
+        public async Task<IActionResult> Update(int id, [FromBody] CategoryEntitiy updateCategory)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -68,7 +68,7 @@ namespace Week12Practice3_Survivor.Controllers
                 
             category.Name = updateCategory.Name;
             category.ModifiedDate = DateTime.Now;
-            category.Competitors = updateCategory.Competitors;
+            //category.Competitors = updateCategory.Competitors;
 
 
             try
@@ -91,9 +91,7 @@ namespace Week12Practice3_Survivor.Controllers
         public async Task<IActionResult> SoftDeleteCategory(int id)
         {
             // Kategoriyi veritabanında bul
-            var category = await _context.Categories
-                                         .Include(c => c.Competitors) // Kategoriyle ilişkilendirilmiş yarışmacıları da dahil et
-                                         .FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (category is null)
             {
@@ -101,15 +99,15 @@ namespace Week12Practice3_Survivor.Controllers
             }
 
             // Kategoriyi soft delete ile işaretle
-            category.IsDeleted = true;
+            category.IsDeleted = false;
             category.ModifiedDate = DateTime.Now;
 
             // Kategoriye bağlı tüm yarışmacıları da soft delete yap
-            foreach (var competitor in category.Competitors)
-            {
-                competitor.IsDeleted = true;
-                competitor.ModifiedDate = DateTime.Now;
-            }
+            //foreach (var competitor in category.Competitors)
+            //{
+            //    competitor.IsDeleted = true;
+            //    competitor.ModifiedDate = DateTime.Now;
+            //}
 
             try
             {
